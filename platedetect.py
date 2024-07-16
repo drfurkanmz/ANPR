@@ -2,7 +2,7 @@ import numpy as np
 import cv2 as cv
 
 
-dosya = "/Users/furkan/Downloads/"
+dosya = "/path/to/images/"
 araba = cv.imread(dosya + "araba.jpg")
 araba2 = cv.imread(dosya + "araba2.jpg")
 araba3 = cv.imread(dosya + "araba3.jpeg")

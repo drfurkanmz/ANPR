@@ -2,13 +2,14 @@ import numpy as np
 import cv2 as cv
 
 
-dosya = "/path/to/images/"
-araba = cv.imread(dosya + "araba.jpg")
-araba2 = cv.imread(dosya + "araba2.jpg")
-araba3 = cv.imread(dosya + "araba3.jpeg")
-araba4 = cv.imread(dosya + "araba4.jpeg")
-araba5 = cv.imread(dosya + "araba5.jpeg")
-araba6 = cv.imread(dosya + "araba6.jpeg")
+imgpath = "/path/to/images/"
+temppath = "/path/to/templates/"
+araba = cv.imread(imgpath + "araba.jpg")
+araba2 = cv.imread(imgpath + "araba2.jpg")
+araba3 = cv.imread(imgpath + "araba3.jpeg")
+araba4 = cv.imread(imgpath + "araba4.jpeg")
+araba5 = cv.imread(imgpath + "araba5.jpeg")
+araba6 = cv.imread(imgpath + "araba6.jpeg")
 
 def EdgeDetectMorph(image):
     grayimage = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
@@ -67,11 +68,6 @@ def PlakaMorphAndDetectPlaces(plaka):
 
     return bulunankoseler
 
-
-
-
-
-
 bulunankonumlar = PlakaMorphAndDetectPlaces(plaka)
 bulunankonumlar = sorted(bulunankonumlar, key=lambda x: x[0])
 
@@ -93,7 +89,7 @@ def HarfTemplates ():
     templates = {}
 
     for word in words:
-        img_crop = cv.imread(dosya + f'{word}.png')
+        img_crop = cv.imread(temppath + f'{word}.png') 
         img_crop = cv.cvtColor(img_crop,cv.COLOR_BGR2GRAY)
 
         _, binary = cv.threshold(img_crop, 128, 255, cv.THRESH_BINARY_INV | cv.THRESH_OTSU)
@@ -106,22 +102,15 @@ def HarfTemplates ():
     return templates
 
 templates = HarfTemplates()
-
-
-
 def ResizeCharAndCompare(harfler,temp):
     okunanplaka = ""
     for name, img in harfler.items():
-
         resizeimg = cv.cvtColor(img,cv.COLOR_BGR2GRAY)
         _, binary = cv.threshold(resizeimg, 128, 255, cv.THRESH_BINARY_INV | cv.THRESH_OTSU)
         contours, _ = cv.findContours(binary, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
         x, y, w, h = cv.boundingRect(contours[0])
         resizeimg = binary[y:y + h, x:x + w]
         resizeimg = cv.resize(resizeimg, (38, 20), interpolation=cv.INTER_AREA)
-
-
-
         high1=0
         for name1,img1 in temp.items():
 
@@ -129,10 +118,6 @@ def ResizeCharAndCompare(harfler,temp):
             if result > high1 :
                 high1 = result
                 bulunanharf = name1
-
-
-
-
         okunanplaka = okunanplaka + bulunanharf[3]
         high1=0
 
@@ -160,7 +145,6 @@ def ResizeCharAndCompare1(harfler,temp): ##Turk plakasi icin ozellestirilmis
                     result = cv.matchTemplate(resizeimg, img1, method=cv.TM_CCORR_NORMED)
                     if result > high1:
 
-
                         high1 = result
                         bulunanharf = name1
 
@@ -174,33 +158,20 @@ def ResizeCharAndCompare1(harfler,temp): ##Turk plakasi icin ozellestirilmis
             x, y, w, h = cv.boundingRect(contours[0])
             resizeimg = binary[y:y + h, x:x + w]
             resizeimg = cv.resize(resizeimg, (38, 20), interpolation=cv.INTER_AREA)
-
             high1 = 0
             for name1, img1 in temp.items():
-
                 result = cv.matchTemplate(resizeimg, img1, method=cv.TM_CCORR_NORMED)
                 if result > high1:
-
-
                     high1 = result
                     bulunanharf = name1
 
         i += 1
-
-
-
         okunanplaka = okunanplaka + bulunanharf[3]
         high1=0
 
     return okunanplaka
 
-
-
-
-
-
-
-str = ResizeCharAndCompare1(harfler,templates)
+str = ResizeCharAndCompare1(harfler,templates) ## FOR TURKISH PLATES
 print(str)
 
 cv.waitKey(0)

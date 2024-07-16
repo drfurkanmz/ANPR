@@ -4,7 +4,6 @@ import cv2 as cv
 
 imgpath = "/path/to/images/"
 temppath = "/path/to/templates/"
-araba = cv.imread(imgpath + "araba.jpg")
 araba2 = cv.imread(imgpath + "araba2.jpg")
 araba3 = cv.imread(imgpath + "araba3.jpeg")
 araba4 = cv.imread(imgpath + "araba4.jpeg")

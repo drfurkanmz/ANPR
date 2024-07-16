@@ -74,6 +74,24 @@ ResizeCharAndCompare(harfler, temp): Tespit edilen karakterleri yeniden boyutlan
 
 ResizeCharAndCompare1(harfler, temp): ResizeCharAndCompare fonksiyonuna benzer, ancak Türkiye plakalarinin formatina biraz daha uygun karakter tanıma yöntemi kullanır.
 
+### Conda Kullanarak Ortamın Kurulumu
+
+1. Depoyu klonlayın:
+    ```bash
+    git clone https://github.com/drfurkanmz/opencv.git
+    cd opencv
+    ```
+
+2. Yeni bir conda ortamı oluşturun ve etkinleştirin:
+    ```bash
+    conda create --name plaka_tespiti python=3.9
+    conda activate plaka_tespiti
+    ```
+
+3. Gerekli paketleri yükleyin:
+    ```bash
+    conda install --file requirements.txt
+    ```
 
 
 

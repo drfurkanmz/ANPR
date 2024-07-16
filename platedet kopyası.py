@@ -1,6 +1,6 @@
 import numpy as np
 import cv2 as cv
-from matplotlib import pyplot as plt
+
 
 dosya = "/Users/furkan/Downloads/"
 araba = cv.imread(dosya + "araba.jpg")
@@ -10,7 +10,6 @@ araba4 = cv.imread(dosya + "araba4.jpeg")
 araba5 = cv.imread(dosya + "araba5.jpeg")
 araba6 = cv.imread(dosya + "araba6.jpeg")
 
-/Users/furkan/Desktop/platedet kopyası.py
 def EdgeDetectMorph(image):
     grayimage = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
     blur = cv.GaussianBlur(grayimage, (5, 5), 0)

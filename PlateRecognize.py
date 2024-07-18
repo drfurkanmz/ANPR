@@ -1,5 +1,6 @@
 import numpy as np
 import cv2 as cv
+import easyocr
 
 class LicensePlateRecognition:
     def __init__(self, imgpath, temppath, images):
@@ -135,6 +136,7 @@ class LicensePlateRecognition:
         return okunanplaka
 
     def show_image(self):
+        reader = easyocr.Reader(['tr'])
         bulunma = False
         image_path = self.imgpath + self.images[self.current_image_index]
         image = cv.imread(image_path)
@@ -150,7 +152,9 @@ class LicensePlateRecognition:
             templates = self.HarfTemplates()
             plaka_text = self.ResizeCharAndCompare1(harfler, templates) #For Turkish Plates
             #plaka_text = self.ResizeCharAndCompare(harfler, templates) For other countries
-
+            result = reader.readtext(plaka)
+            for (bbox,text,prob) in result:
+                print(text,'easyocr')
             if len(plaka_text)>4 and len(plaka_text)<10 and bulunma==False:
 
                 cv.rectangle(imagecopy, (x, y), (x + w, y + h), (0, 255, 0), 2)

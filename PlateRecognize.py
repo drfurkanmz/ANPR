@@ -142,7 +142,7 @@ class LicensePlateRecognition:
         harfler = self.Words(plaka, self.PlakaMorphAndDetectPlaces(plaka))
         templates = self.HarfTemplates()
         plaka_text = self.ResizeCharAndCompare1(harfler, templates) #For Turkish Plates
-        #plaka_text = self.ResizeCharAndCompare(harfler, templates) For another countries
+        #plaka_text = self.ResizeCharAndCompare(harfler, templates) For other countries
 
         cv.imshow("Detected Area", tespitlimg)
         cv.imshow('Plate', plaka)

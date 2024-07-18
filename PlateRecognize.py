@@ -15,18 +15,19 @@ class LicensePlateRecognition:
         return otsu_threshold
 
     def FindArea(self, image, closedimage):
-        imagecopy = image.copy()
         konuminfos = []
         contours, _ = cv.findContours(closedimage, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+        i=0
         for contour in contours:
             area = cv.contourArea(contour)
             if area > 500:
                 x, y, w, h = cv.boundingRect(contour)
                 aspect_ratio = w / float(h)
-                if 3 < aspect_ratio < 6:
-                    cv.rectangle(imagecopy, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                    konuminfos = [x, y, w, h]
-        return imagecopy, konuminfos
+                if 3 < aspect_ratio < 7:
+
+                    konuminfos.append((x, y, w, h))
+                    i+=1
+        return  konuminfos
 
     def Plate(self, image, liste):
         x, y, w, h = liste
@@ -134,19 +135,34 @@ class LicensePlateRecognition:
         return okunanplaka
 
     def show_image(self):
+        bulunma = False
         image_path = self.imgpath + self.images[self.current_image_index]
         image = cv.imread(image_path)
+        image = cv.resize(image,(640,480))
         closed = self.EdgeDetectMorph(image)
-        tespitlimg, liste = self.FindArea(image, closed)
-        plaka = self.Plate(tespitlimg, liste)
-        harfler = self.Words(plaka, self.PlakaMorphAndDetectPlaces(plaka))
-        templates = self.HarfTemplates()
-        plaka_text = self.ResizeCharAndCompare1(harfler, templates) #For Turkish Plates
-        #plaka_text = self.ResizeCharAndCompare(harfler, templates) For other countries
+        liste = self.FindArea(image, closed)
+        for i in range (len(liste)):
+            imagecopy = image.copy()
+            konum = liste[i]
+            x, y, w, h = konum
+            plaka = self.Plate(imagecopy, konum)
+            harfler = self.Words(plaka, self.PlakaMorphAndDetectPlaces(plaka))
+            templates = self.HarfTemplates()
+            plaka_text = self.ResizeCharAndCompare1(harfler, templates) #For Turkish Plates
+            #plaka_text = self.ResizeCharAndCompare(harfler, templates) For other countries
 
-        cv.imshow("Detected Area", tespitlimg)
-        cv.imshow('Plate', plaka)
-        print(plaka_text)
+            if len(plaka_text)>4 and len(plaka_text)<10 and bulunma==False:
+
+                cv.rectangle(imagecopy, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                cv.imshow('area', imagecopy)
+                print('Okunan Plaka:',plaka_text)
+                bulunma=True
+        if (bulunma==False):
+            cv.imshow('area', imagecopy)
+            print("Plaka algilanamadi")
+
+
+
 
     def next_image(self):
         self.current_image_index = (self.current_image_index + 1) % len(self.images)

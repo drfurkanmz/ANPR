@@ -1,7 +1,7 @@
-# opencv
+# ANPR
 # License Plate Detection and Character Recognition
 
-This project aims to detect license plates in car images and recognize the characters on the license plates using OpenCV.
+This project aims to detect license plates in car images and recognize the characters on the license plates using ANPR.
 
 ## Description
 
@@ -15,8 +15,8 @@ The project uses image processing techniques to detect the license plate in an i
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/drfurkanmz/opencv.git
-    cd opencv
+    git clone https://github.com/drfurkanmz/ANPR.git
+    cd ANPR
     ```
 
 2. Install the required packages:
@@ -29,10 +29,10 @@ The project uses image processing techniques to detect the license plate in an i
 
     
 
-# opencv
+# ANPR
 # Plaka Tespiti ve Karakter Tanıma
 
-Bu proje, araba görüntülerindeki plakaları tespit etmeyi ve plakadaki karakterleri OpenCV kullanarak tanımayı amaçlamaktadır.
+Bu proje, araba görüntülerindeki plakaları tespit etmeyi ve plakadaki karakterleri opencv kullanarak tanımayı amaçlamaktadır.
 
 ## Usage
 
@@ -46,8 +46,8 @@ Proje, bir görüntüdeki plakayı tespit etmek ve ardından plakadaki karakterl
 
 1. Depoyu klonlayın:
     ```bash
-    git clone https://github.com/drfurkanmz/opencv.git
-    cd opencv
+    git clone https://github.com/drfurkanmz/ANPR.git
+    cd ANPR
     ```
 
 2. Gerekli paketleri yükleyin:
@@ -78,8 +78,8 @@ ResizeCharAndCompare1(harfler, temp): ResizeCharAndCompare fonksiyonuna benzer, 
 
 1. Depoyu klonlayın:
     ```bash
-    git clone https://github.com/drfurkanmz/opencv.git
-    cd opencv
+    git clone https://github.com/drfurkanmz/ANPR.git
+    cd ANPR
     ```
 
 2. Yeni bir conda ortamı oluşturun ve etkinleştirin:
